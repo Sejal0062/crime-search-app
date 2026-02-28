@@ -1,0 +1,16 @@
+# Node
+crime-awareness-frontend/node_modules/
+crime-awareness-frontend/build/
+
+# Java
+crime-awareness/target/
+
+# IDE
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
