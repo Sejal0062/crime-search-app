@@ -1,0 +1,55 @@
+version: '3.9'
+
+services:
+
+  db:
+    image: postgres:15
+    container_name: crime_db
+    environment:
+      POSTGRES_DB: crime_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root1
+    ports:
+      - "5432:5432"
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  crime_backend:
+    build:
+      context: ./crime-awareness-backend/crime-awareness
+      dockerfile: Dockerfile
+    container_name: crime_backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/crime_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root1
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      NEWS_API_KEY: ${NEWS_API_KEY}
+      VIDEO_API_KEY: ${VIDEO_API_KEY}
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["./wait-for-it.sh", "db:5432", "--", "java", "-jar", "crime-awareness.jar"]
+    restart: always
+
+  crime_frontend:
+    build:
+      context: ./crime-awareness-frontend
+      dockerfile: Dockerfile
+    container_name: crime_frontend
+    ports:
+      - "8081:80"
+    depends_on:
+      - crime_backend
+    restart: always
+
+volumes:
+  db_data:
