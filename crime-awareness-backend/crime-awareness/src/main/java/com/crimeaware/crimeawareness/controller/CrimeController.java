@@ -17,7 +17,7 @@ public class CrimeController {
 
     @GetMapping("/search")
     public SearchResponseDTO searchCrime(
-            @RequestParam String query,
+            @RequestParam(required = false, defaultValue = "") String query,
             @RequestParam(required = false) String location
     ) {
 

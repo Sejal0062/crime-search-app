@@ -1,24 +1,32 @@
+
 package com.crimeaware.crimeawareness.entity;
 
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "news")
 public class News {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(columnDefinition = "TEXT")
     private String title;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Column(columnDefinition = "TEXT")
     private String url;
 
+    @Column(name = "image_url", columnDefinition = "TEXT")
     private String imageUrl;
 
+    @Column(length = 255)
     private String source;
 
+    @Column(name = "query", columnDefinition = "TEXT")
     private String query;
 
     public News() {}

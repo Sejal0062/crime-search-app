@@ -38,14 +38,10 @@ public class AuthService {
         Optional<User> userOpt = userRepository.findByEmail(normalizedEmail);
 
         if (userOpt.isEmpty()) {
-            System.out.println("Login failed: user not found for " + normalizedEmail);
             return false;
         }
 
         User user = userOpt.get();
-        boolean match = encoder.matches(password, user.getPassword());
-
-        System.out.println("Login attempt for " + normalizedEmail + ", password match: " + match);
-        return match;
+        return encoder.matches(password, user.getPassword());
     }
 }

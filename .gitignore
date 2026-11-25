@@ -1,16 +1,20 @@
-# Node
-crime-awareness-frontend/node_modules/
-crime-awareness-frontend/build/
+# Credentials
+.env
+.env.*
+!.env.example
 
-# Java
-crime-awareness/target/
+# Dependencies
+node_modules/
+target/
+dist/
+build/
 
-# IDE
-.idea/
+# IDE files
 .vscode/
+.idea/
 
-# Logs
+# Unnecessary files
+*.zip
 *.log
-
-# OS
+desktop.ini
 .DS_Store
